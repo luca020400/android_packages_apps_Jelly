@@ -126,13 +126,13 @@ class FavoriteActivity : AppCompatActivity() {
                     item.title = title
                     item.url = url
                     mFavoriteDatabaseHandler.updateItem(item)
-                    refresh()
+                    mFavoriteAdapter.updateItem(item.id, false)
                     dialog.dismiss()
                 }
                 .setNeutralButton(R.string.favorite_edit_delete
                 ) { dialog, _ ->
                     mFavoriteDatabaseHandler.deleteItem(item.id)
-                    mFavoriteAdapter.removeItem(item.id)
+                    mFavoriteAdapter.updateItem(item.id, true)
                     dialog.dismiss()
                 }
                 .setNegativeButton(android.R.string.cancel

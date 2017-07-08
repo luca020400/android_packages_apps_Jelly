@@ -44,7 +44,7 @@ internal class FavoriteAdapter(private val mContext: Context) : RecyclerView.Ada
         notifyDataSetChanged()
     }
 
-    fun removeItem(id: Long) {
+    fun updateItem(id: Long, remove: Boolean) {
         var position = 0
         while (position < mList.size) {
             if (mList[position].id == id) {
@@ -57,12 +57,16 @@ internal class FavoriteAdapter(private val mContext: Context) : RecyclerView.Ada
             return
         }
 
-        mList.removeAt(position)
-        notifyItemRemoved(position)
+        if (remove) {
+            mList.removeAt(position)
+            notifyItemRemoved(position)
 
-        if (mList.isEmpty()) {
-            // Show empty status
-            (mContext as FavoriteActivity).refresh()
+            if (mList.isEmpty()) {
+                // Show empty status
+                (mContext as FavoriteActivity).refresh()
+            }
+        } else {
+            notifyItemChanged(position)
         }
     }
 }
