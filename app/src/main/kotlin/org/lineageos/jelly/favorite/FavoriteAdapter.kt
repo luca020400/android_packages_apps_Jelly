@@ -39,6 +39,7 @@ internal class FavoriteAdapter(private val mContext: Context) : RecyclerView.Ada
     }
 
     fun updateList(list: List<Favorite>) {
+        mList.clear()
         mList.addAll(list)
         notifyDataSetChanged()
     }
