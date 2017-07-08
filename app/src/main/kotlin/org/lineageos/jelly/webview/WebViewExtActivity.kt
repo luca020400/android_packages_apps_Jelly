@@ -28,7 +28,5 @@ abstract class WebViewExtActivity : AppCompatActivity() {
 
     abstract fun showSheetMenu(url: String, shouldAllowDownload: Boolean)
 
-    abstract fun onThemeColorSet(color: Int)
-
     abstract fun onFaviconLoaded(favicon: Bitmap?)
 }

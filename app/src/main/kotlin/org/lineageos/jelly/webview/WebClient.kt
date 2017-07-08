@@ -32,7 +32,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.auth_dialog.view.*
-import org.lineageos.jelly.IntentFilterCompat
 import org.lineageos.jelly.MainActivity
 import org.lineageos.jelly.R
 import org.lineageos.jelly.utils.UrlUtils
@@ -147,7 +146,7 @@ internal class WebClient : WebViewClient() {
             if (filter == null) {
                 continue
             }
-            if (IntentFilterCompat.filterIsBrowser(filter) && !TextUtils.equals(info.packageName, ourPackageName)) {
+            if (filter.countDataAuthorities() == 0 && !TextUtils.equals(info.packageName, ourPackageName)) {
                 continue
             }
 

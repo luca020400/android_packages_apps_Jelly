@@ -33,17 +33,12 @@ internal class ChromeClient(
         private val mActivity: WebViewExtActivity,
         private val mIncognito: Boolean,
         private val url_bar: AutoCompleteTextViewExt,
-        private val load_progress: ProgressBar) : WebChromeClientCompat() {
+        private val load_progress: ProgressBar) : WebChromeClient() {
 
     override fun onProgressChanged(view: WebView, progress: Int) {
         load_progress.visibility = if (progress == 100) View.INVISIBLE else View.VISIBLE
         load_progress.progress = if (progress == 100) 0 else progress
         super.onProgressChanged(view, progress)
-    }
-
-    override fun onThemeColorChanged(view: WebView, color: Int) {
-        mActivity.onThemeColorSet(color)
-        super.onThemeColorChanged(view, color)
     }
 
     override fun onReceivedTitle(view: WebView, title: String) {

@@ -65,7 +65,6 @@ import org.lineageos.jelly.history.HistoryActivity
 import org.lineageos.jelly.suggestions.SuggestionsAdapter
 import org.lineageos.jelly.utils.PrefsUtils
 import org.lineageos.jelly.utils.UiUtils
-import org.lineageos.jelly.webview.WebViewCompat
 import org.lineageos.jelly.webview.WebViewExtActivity
 import java.io.File
 import java.io.FileOutputStream
@@ -85,7 +84,6 @@ class MainActivity : WebViewExtActivity(), View.OnTouchListener, View.OnScrollCh
             receiver.send(Activity.RESULT_CANCELED, Bundle())
         }
     }
-    private var mHasThemeColorSupport: Boolean = false
     private var mLastActionBarDrawable: Drawable? = null
     private var mThemeColor: Int = 0
 
@@ -168,8 +166,6 @@ class MainActivity : WebViewExtActivity(), View.OnTouchListener, View.OnScrollCh
         web_view.init(this, mIncognito, url_bar, load_progress)
         web_view.isDesktopMode = desktopMode
         web_view.loadUrl(if (!url.isNullOrBlank()) url!! else PrefsUtils.getHomePage(this))
-
-        mHasThemeColorSupport = WebViewCompat.isThemeColorSupported(web_view)
 
         mGestureDetector = GestureDetectorCompat(this,
                 object : GestureDetector.SimpleOnGestureListener() {
@@ -443,21 +439,13 @@ class MainActivity : WebViewExtActivity(), View.OnTouchListener, View.OnScrollCh
         return result == PackageManager.PERMISSION_GRANTED
     }
 
-    override fun onThemeColorSet(color: Int) {
-        if (mHasThemeColorSupport) {
-            applyThemeColor(color)
-        }
-    }
-
     override fun onFaviconLoaded(favicon: Bitmap?) {
         if (favicon == null || favicon.isRecycled) {
             return
         }
 
         mUrlIcon = favicon.copy(favicon.config, true)
-        if (!mHasThemeColorSupport) {
-            applyThemeColor(UiUtils.getColor(favicon, web_view.isIncognito))
-        }
+        applyThemeColor(UiUtils.getColor(favicon, web_view.isIncognito))
 
         if (!favicon.isRecycled) {
             favicon.recycle()
